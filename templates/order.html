@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Pesan Produk{% endblock %}
+{% block content %}
+<h3>Pesan Produk</h3>
+<form id="orderForm" onsubmit="sendMessage(event)">
+    <div class="mb-3">
+        <label for="name" class="form-label">Nama Anda</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <div class="mb-3">
+        <label for="product_id" class="form-label">Pilih Produk</label>
+        <select class="form-select" id="product_id" name="product_id">
+            {% for product in products %}
+            <option value="{{ product.id }}" data-name="{{ product.name }}" data-price="{{ product.price }}">
+                {{ product.name }} - Rp {{ product.price }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="quantity" class="form-label">Jumlah</label>
+        <input type="number" class="form-control" id="quantity" name="quantity" min="1" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Pesan</button>
+</form>
+
+<script>
+    function sendMessage(event) {
+        event.preventDefault(); // Mencegah pengiriman formulir ke server
+
+        // Ambil data dari formulir
+        const name = document.getElementById('name').value;
+        const productSelect = document.getElementById('product_id');
+        const selectedOption = productSelect.options[productSelect.selectedIndex];
+        const productName = selectedOption.getAttribute('data-name');
+        const productPrice = selectedOption.getAttribute('data-price');
+        const quantity = document.getElementById('quantity').value;
+
+        // Format pesan untuk WhatsApp
+        const message = `Halo, saya ingin memesan:
+        - Nama: ${name}
+        - Produk: ${productName} (Rp ${productPrice})
+        - Jumlah: ${quantity}`;
+
+        // Nomor WhatsApp tujuan (ganti dengan nomor Anda)
+        const phoneNumber = '+6285228820207'; // Contoh: +62 untuk Indonesia
+
+        // Buat URL WhatsApp
+        const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+        // Redirect ke WhatsApp
+        window.open(whatsappURL, '_blank');
+    }
+</script>
+{% endblock %}

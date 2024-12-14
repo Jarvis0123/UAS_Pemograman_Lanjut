@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Detail Produk{% endblock %}
+{% block content %}
+<h3>{{ product.name }}</h3>
+<div class="row">
+    <div class="col-md-6">
+        <img src="{{ product.image_url or url_for('static', filename='') }}" alt="{{ product.name }}" class="img-fluid">
+    </div>
+    <div class="col-md-6">
+        <h3>Harga: Rp {{ product.price }}</h3>
+        <p><strong>Brand:</strong> {{ product.brand }}</p>
+        <p>{{ product.description }}</p>
+        {% if session['role'] != 'admin' %}
+        <a href="https://wa.me/+6285228820207?text=Pesan%20{{ product.name }}" class="btn btn-success">Pesan via WA</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

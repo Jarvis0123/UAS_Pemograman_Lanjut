@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Daftar Produk{% endblock %}
+{% block content %}
+<h3>Daftar Produk</h3>
+<form method="GET" class="mb-4">
+    <div class="row g-2">
+        <div class="col-md-4">
+            <input type="text" name="search" class="form-control" placeholder="Cari Produk..." value="{{ search_query }}">
+        </div>
+        <div class="col-md-4">
+            <select name="brand" class="form-select">
+                <option value="">Semua Brand</option>
+                {% for brand in brands %}
+                <option value="{{ brand.brand }}" {% if filter_brand == brand.brand %}selected{% endif %}>{{ brand.brand }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+</form>
+<div class="row">
+    {% for product in products %}
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.description }}</p>
+                <p>Harga: Rp {{ product.price }}</p>
+                <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn btn-info">Detail</a>
+                
+                {% if session['role'] == 'admin' %}
+                    <a href="{{ url_for('edit_product', product_id=product.id) }}" class="btn btn-warning">Edit</a>
+                {% endif %}
+            </div>
+            
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

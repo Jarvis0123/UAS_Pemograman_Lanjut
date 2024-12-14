@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Produk{% endblock %}
+
+{% block content %}
+    <h3>Edit Produk</h3>
+    <form method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="name" class="form-label">Nama Produk</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ product.name }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="brand" class="form-label">Jenis Produk</label>
+            <input type="text" class="form-control" id="brand" name="brand" value="{{ product.brand }}">
+        </div>
+        <div class="mb-3">
+            <label for="price" class="form-label">Harga Produk</label>
+            <input type="number" class="form-control" id="price" name="price" value="{{ product.price }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Deskripsi Produk</label>
+            <textarea class="form-control" id="description" name="description" rows="3" required>{{ product.description }}</textarea>
+        </div>
+        <!-- Tombol Simpan dan Hapus -->
+        <div class="d-flex justify-content-between">
+            <button type="submit" name="save" class="btn btn-primary">Simpan</button>
+            <a href="{{ url_for('delete_product', product_id=product.id) }}" class="btn btn-danger">Hapus</a>
+        </div>
+    </form>
+{% endblock %}

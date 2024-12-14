@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Bengkel Las{% endblock %}
+
+{% block content %}
+    <div class="form-container">
+        <h2>Register</h2>
+        <form method="POST">
+            <!-- Username Field -->
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" required class="form-control">
+            </div>
+            
+            <!-- Password Field with Eye Toggle -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-container">
+                    <input type="password" name="password" id="password" required class="form-control">
+                    <span class="eye-icon" onclick="togglePassword()">😎</span>
+                </div>
+            </div>
+
+            <!-- Confirm Password Field with Eye Toggle -->
+            <div class="form-group">
+                <label for="confirm_password">Konfirmasi Password</label>
+                <div class="password-container">
+                    <input type="password" name="confirm_password" id="confirm_password" required class="form-control">
+                    <span class="eye-icon" onclick="toggleConfirmPassword()">😎</span>
+                </div>
+            </div>
+
+            <!-- Register Button -->
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+
+    <script>
+        function togglePassword() {
+            var passwordField = document.getElementById('password');
+            var eyeIcon = document.querySelector('.eye-icon');
+
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                eyeIcon.textContent = '👀';  // Eye closed when showing password
+            } else {
+                passwordField.type = 'password';
+                eyeIcon.textContent = '😎';  // Eye open when hiding password
+            }
+        }
+
+        function toggleConfirmPassword() {
+            var confirmPasswordField = document.getElementById('confirm_password');
+            var eyeIcon = document.querySelectorAll('.eye-icon')[1]; // Select second eye icon
+
+            if (confirmPasswordField.type === 'password') {
+                confirmPasswordField.type = 'text';
+                eyeIcon.textContent = '👀';  // Eye closed when showing password
+            } else {
+                confirmPasswordField.type = 'password';
+                eyeIcon.textContent = '😎';  // Eye open when hiding password
+            }
+        }
+    </script>
+{% endblock %}
